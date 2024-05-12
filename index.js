@@ -9,7 +9,7 @@ const router = require("./routes");
 const app = express();
 
 // Express config
-expressConfig();
+expressConfig(app);
 
 // App router 
 app.use(router);
