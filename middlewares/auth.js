@@ -44,3 +44,9 @@ const isCoach = (req, res, next) => {
 
     next();
 }
+
+module.exports = {
+    authMiddleware,
+    isAuth,
+    isCoach
+}
