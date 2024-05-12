@@ -16,7 +16,18 @@ const generateToken = async (user) => {
 const loginUser = async (data) => {
     const user = db.find((obj) => obj.username === data.username);
 
-    console.log(user);
+    if (!user) {
+        throw new Error("Username or password are incorrect!");
+    }
+
+    const isValidPassword = user.password === data.password;
+
+    if (!isValidPassword) {
+        throw new Error("Username or password are incorrect!");
+    }
+
+    const token = await generateToken(user);
+    return token;
 }
 
 module.exports = {
