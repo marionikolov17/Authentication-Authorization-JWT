@@ -10,7 +10,12 @@ router.get("/test", (req, res) => {
 });
 
 router.get("/coach", (req, res) => {
-    
+    res.status(200).json({
+        status: "success",
+        data: {
+            message: "You are logged in and you are authorized as coach to view this."
+        }
+    });
 });
 
 module.exports = router;
