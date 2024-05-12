@@ -26,7 +26,20 @@ const isAuth = (req, res, next) => {
             data: {
                 error: "You must login!"
             }
-        })
+        });
+    }
+
+    next();
+}
+
+const isCoach = (req, res, next) => {
+    if (req.user.role !== "coach") {
+        return res.status(401).json({
+            status: "fail",
+            data: {
+                error: "You are unauthorized for this action - not a coach!"
+            }
+        });
     }
 
     next();
