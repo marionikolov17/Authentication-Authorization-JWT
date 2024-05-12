@@ -18,3 +18,16 @@ const authMiddleware = async (req, res, next) => {
         next();
     }
 }
+
+const isAuth = (req, res, next) => {
+    if (!req.user) {
+        return res.status(401).json({
+            status: "fail",
+            data: {
+                error: "You must login!"
+            }
+        })
+    }
+
+    next();
+}
