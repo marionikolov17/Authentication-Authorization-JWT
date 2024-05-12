@@ -23,4 +23,14 @@ router.post("/login", async (req, res) => {
     }
 });
 
+router.get("/logout", (req, res) => {
+    res.clearCookie("auth");
+    res.status(200).json({
+        status: "success",
+        data: {
+            message: "You are logged out."
+        }
+    })
+});
+
 module.exports = router;
