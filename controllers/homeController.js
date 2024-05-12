@@ -1,6 +1,8 @@
 const router = require("express").Router();
 
-router.get("/test", (req, res) => {
+const { isAuth, isCoach } = require("./../middlewares/auth");
+
+router.get("/test", isAuth, (req, res) => {
     res.status(200).json({
         status: "success",
         data: {
@@ -9,7 +11,7 @@ router.get("/test", (req, res) => {
     });
 });
 
-router.get("/coach", (req, res) => {
+router.get("/coach", isAuth, isCoach, (req, res) => {
     res.status(200).json({
         status: "success",
         data: {
