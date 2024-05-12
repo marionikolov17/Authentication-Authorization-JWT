@@ -1,1 +1,1 @@
-*Authentication and Authorization flow with Express and JWT - Javascript only*
+**Authentication and Authorization flow with Express and JWT - Javascript only**
