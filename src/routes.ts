@@ -1,9 +1,11 @@
-const router = require("express").Router();
+import express from "express";
 
-const authController = require("./controllers/authController");
-const homeController = require("./controllers/homeController");
+const router = express.Router();
+
+import authController from "./controllers/authController";
+import homeController from "./controllers/homeController";
 
 router.use("/auth", authController);
 router.use("/home", homeController);
 
-module.exports = router;
+export default router;

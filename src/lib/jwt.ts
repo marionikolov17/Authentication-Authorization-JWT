@@ -1,12 +1,27 @@
-const util = require("util");
+import util from "util";
 
-const jwt = require("jsonwebtoken");
+import jwt from "jsonwebtoken";
 
-const sign = util.promisify(jwt.sign);
+export const sign = (token: any, secret: any) => {
+    return new Promise((resolve, reject) => {
+        jwt.sign(token, secret, {}, (err, payload) => {
+            if (err) {
+                reject (err);
+            } else {
+                resolve(payload);
+            }
+        })
+    })
+};
 
-const verify = util.promisify(jwt.verify);
-
-module.exports = {
-    sign,
-    verify
+export const verify = (token: any, secret: any) => {
+    return new Promise((resolve, reject) => {
+        jwt.verify(token, secret, {}, (err, payload) => {
+            if (err) {
+                reject (err);
+            } else {
+                resolve(payload);
+            }
+        })
+    })
 }

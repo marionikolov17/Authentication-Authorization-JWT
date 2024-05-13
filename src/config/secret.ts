@@ -1,3 +1,3 @@
 const SECRET = "fjlkdasjflk;";
 
-module.exports = SECRET;
+export default SECRET;

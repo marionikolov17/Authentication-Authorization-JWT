@@ -1,6 +1,8 @@
-const router = require("express").Router();
+import express from "express";
 
-const { isAuth, isCoach } = require("./../middlewares/auth");
+const router = express.Router();
+
+import { isAuth, isCoach } from "./../middlewares/auth";
 
 router.get("/test", isAuth, (req, res) => {
     res.status(200).json({
@@ -20,4 +22,4 @@ router.get("/coach", isAuth, isCoach, (req, res) => {
     });
 });
 
-module.exports = router;
+export default router;

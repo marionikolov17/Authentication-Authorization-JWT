@@ -1,8 +1,8 @@
-const jwt = require("./../lib/jwt");
-const SECRET = require("./../config/secret");
+import * as jwt from "./../lib/jwt";
+import SECRET from "./../config/secret";
 
-const authMiddleware = async (req, res, next) => {
-    const token = req.cookies["auth"];
+export const authMiddleware = async (req: any, res: any, next: any) => {
+    const token = req.cookies.auth;
 
     if (!token) {
         return next();
@@ -19,7 +19,7 @@ const authMiddleware = async (req, res, next) => {
     }
 }
 
-const isAuth = (req, res, next) => {
+export const isAuth = (req: any, res: any, next: any) => {
     if (!req.user) {
         return res.status(401).json({
             status: "fail",
@@ -32,7 +32,7 @@ const isAuth = (req, res, next) => {
     next();
 }
 
-const isCoach = (req, res, next) => {
+export const isCoach = (req: any, res: any, next: any) => {
     if (req.user.role !== "coach") {
         return res.status(401).json({
             status: "fail",
@@ -45,8 +45,3 @@ const isCoach = (req, res, next) => {
     next();
 }
 
-module.exports = {
-    authMiddleware,
-    isAuth,
-    isCoach
-}

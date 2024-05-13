@@ -1,9 +1,9 @@
-const jwt = require("./../lib/jwt");
-const SECRET = require("./../config/secret");
+import * as jwt from "./../lib/jwt";
+import SECRET from "./../config/secret";
 
-const db = require("./../data/database");
+import db from "./../data/database";
 
-const generateToken = async (user) => {
+const generateToken = async (user: any) => {
     const payload = {
         id: user.id,
         role: user.role
@@ -13,7 +13,7 @@ const generateToken = async (user) => {
     return token;
 }
 
-const loginUser = async (data) => {
+export const loginUser = async (data: any) => {
     const user = db.find((obj) => obj.username === data.username);
 
     if (!user) {
@@ -28,8 +28,4 @@ const loginUser = async (data) => {
 
     const token = await generateToken(user);
     return token;
-}
-
-module.exports = {
-    loginUser
 }

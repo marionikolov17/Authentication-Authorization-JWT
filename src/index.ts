@@ -1,13 +1,13 @@
 import express from "express";
 
 // Config imports
-const expressConfig = require("./config/expressConfig");
+import expressConfig from "./config/expressConfig";
 
 // Auth middlewares import
-const { authMiddleware } = require("./middlewares/auth");
+import { authMiddleware } from "./middlewares/auth";
 
 // Router import
-const router = require("./routes");
+import router from "./routes";
 
 const app = express();
 
@@ -17,7 +17,7 @@ expressConfig(app);
 // Auth middleware - first middleware
 app.use(authMiddleware);
 
-// App router 
+// App router
 app.use(router);
 
 const port = 3000;

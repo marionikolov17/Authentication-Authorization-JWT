@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const db = [
     {
         id: 1,
@@ -11,6 +13,6 @@ const db = [
         password: "1234",
         role: "trainee"
     }
-]
-
-export default db;
+];
+exports.default = db;
+//# sourceMappingURL=database.js.map

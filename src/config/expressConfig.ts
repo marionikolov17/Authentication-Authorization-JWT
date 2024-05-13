@@ -1,12 +1,11 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
+import express from "express";
+import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
 
-function expressConfig(app) {
+export default function expressConfig(app: any) {
     app.use(express.urlencoded({ extended: false }));
-    app.use(bodyParser.json({ extended: false }));
+    app.use(bodyParser.json());
     app.use(cookieParser());
     return app;
 }
 
-module.exports = expressConfig;
