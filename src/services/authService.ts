@@ -1,3 +1,4 @@
+import { Secret } from "jsonwebtoken";
 import * as jwt from "./../lib/jwt";
 import {ACCESS_SECRET, REFRESH_SECRET} from "./../config/secret";
 
@@ -10,13 +11,13 @@ interface LoginData {
     password: String
 }
 
-const generateToken = async (user: User) => {
+const generateToken = async (user: User, secret: Secret, expiresIn: string) => {
     const payload = {
         id: user.id,
         role: user.role
     };
 
-    const token = await jwt.sign(payload, ACCESS_SECRET);
+    const token = await jwt.sign(payload, secret, { expiresIn });
     return token;
 }
 
@@ -33,6 +34,7 @@ export const loginUser = async (data: LoginData) => {
         throw new Error("Username or password are incorrect!");
     }
 
-    const token = await generateToken(user);
-    return token;
+    const accessToken = await generateToken(user, ACCESS_SECRET, "2m");
+    const refreshToken = await generateToken(user, REFRESH_SECRET, "10m");
+    return [accessToken, refreshToken];
 }
