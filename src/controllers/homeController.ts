@@ -4,7 +4,7 @@ const router = express.Router();
 
 import { isAuth, isCoach } from "./../middlewares/auth";
 
-router.get("/test", isAuth, (req, res) => {
+router.get("/test", isAuth, (req: express.Request, res: express.Response) => {
     res.status(200).json({
         status: "success",
         data: {
@@ -13,7 +13,7 @@ router.get("/test", isAuth, (req, res) => {
     });
 });
 
-router.get("/coach", isAuth, isCoach, (req, res) => {
+router.get("/coach", isAuth, isCoach, (req: express.Request, res: express.Response) => {
     res.status(200).json({
         status: "success",
         data: {
