@@ -1,5 +1,5 @@
 import * as jwt from "./../lib/jwt";
-import SECRET from "./../config/secret";
+import {ACCESS_SECRET, REFRESH_SECRET} from "./../config/secret";
 
 import { User } from "./../types/user";
 
@@ -16,7 +16,7 @@ const generateToken = async (user: User) => {
         role: user.role
     };
 
-    const token = await jwt.sign(payload, SECRET);
+    const token = await jwt.sign(payload, ACCESS_SECRET);
     return token;
 }
 

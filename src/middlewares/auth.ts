@@ -1,6 +1,6 @@
 import { NextFunction, Response } from "express";
 import * as jwt from "./../lib/jwt";
-import SECRET from "./../config/secret";
+import {ACCESS_SECRET, REFRESH_SECRET} from "./../config/secret";
 
 export const authMiddleware = async (req: any, res: Response, next: NextFunction) => {
     const token = req.cookies.auth;
@@ -10,7 +10,7 @@ export const authMiddleware = async (req: any, res: Response, next: NextFunction
     }
 
     try {
-        const decoded = await jwt.verify(token, SECRET);
+        const decoded = await jwt.verify(token, ACCESS_SECRET);
 
         req.user = decoded;
 
