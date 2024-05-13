@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
 
-export const sign = (token: any, secret: any) => {
+export const sign = (payload: string | object | Buffer, secret: jwt.Secret) => {
     return new Promise((resolve, reject) => {
-        jwt.sign(token, secret, {}, (err, payload) => {
+        jwt.sign(payload, secret, {}, (err, payload) => {
             if (err) {
                 reject (err);
             } else {
@@ -12,9 +12,9 @@ export const sign = (token: any, secret: any) => {
     })
 };
 
-export const verify = (token: any, secret: any) => {
+export const verify = (token: string, secret: jwt.Secret) => {
     return new Promise((resolve, reject) => {
-        jwt.verify(token, secret, {}, (err, payload) => {
+        jwt.verify(token, secret, {}, (err: any, payload: any) => {
             if (err) {
                 reject (err);
             } else {
