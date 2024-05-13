@@ -1,4 +1,4 @@
-const express = require("express");
+import express from "express";
 
 // Config imports
 const expressConfig = require("./config/expressConfig");
