@@ -6,13 +6,13 @@ import * as authService from "./../services/authService";
 
 router.post("/login", async (req: express.Request, res: express.Response) => {
     try {
-        const token = await authService.loginUser(req.body);
+        const [accessToken, refreshToken] = await authService.loginUser(req.body);
 
-        res.cookie("auth", token);
+        res.cookie("auth", refreshToken);
         res.status(200).json({
             status: "success",
             data: {
-                token
+                accessToken
             }
         });
     } catch (err) {
