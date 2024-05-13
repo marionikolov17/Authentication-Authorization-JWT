@@ -1,5 +1,3 @@
-import util from "util";
-
 import jwt from "jsonwebtoken";
 
 export const sign = (token: any, secret: any) => {
