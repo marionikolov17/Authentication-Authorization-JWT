@@ -4,7 +4,7 @@ const router = express.Router();
 
 import * as authService from "./../services/authService";
 
-router.post("/login", async (req, res) => {
+router.post("/login", async (req: express.Request, res: express.Response) => {
     try {
         const token = await authService.loginUser(req.body);
 
@@ -25,7 +25,7 @@ router.post("/login", async (req, res) => {
     }
 });
 
-router.get("/logout", (req, res) => {
+router.get("/logout", (req: express.Request, res: express.Response) => {
     res.clearCookie("auth");
     res.status(200).json({
         status: "success",
