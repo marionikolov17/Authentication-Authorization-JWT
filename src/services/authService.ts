@@ -1,9 +1,16 @@
 import * as jwt from "./../lib/jwt";
 import SECRET from "./../config/secret";
 
+import { User } from "./../types/user";
+
 import db from "./../data/database";
 
-const generateToken = async (user: any) => {
+interface LoginData {
+    username: String,
+    password: String
+}
+
+const generateToken = async (user: User) => {
     const payload = {
         id: user.id,
         role: user.role
@@ -13,7 +20,7 @@ const generateToken = async (user: any) => {
     return token;
 }
 
-export const loginUser = async (data: any) => {
+export const loginUser = async (data: LoginData) => {
     const user = db.find((obj) => obj.username === data.username);
 
     if (!user) {
