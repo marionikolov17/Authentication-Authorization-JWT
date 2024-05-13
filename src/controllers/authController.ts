@@ -8,7 +8,12 @@ router.post("/login", async (req: express.Request, res: express.Response) => {
     try {
         const [accessToken, refreshToken] = await authService.loginUser(req.body);
 
-        res.cookie("auth", refreshToken);
+        res.cookie("auth", refreshToken, {
+            httpOnly: true,
+            sameSite: "none",
+            secure: true,
+            maxAge: 24 * 60 * 60 * 100
+        });
         res.status(200).json({
             status: "success",
             data: {
