@@ -1,4 +1,4 @@
-Authentication and Authorization flow with Express and JWT - Javascript only demo.
+Authentication and Authorization flow with Express and JWT - demo.
 
 <h2>Request flow - Coach protected</h2>
 
