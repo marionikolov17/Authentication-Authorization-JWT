@@ -1,4 +1,6 @@
-const db = [
+import { User } from "./../types/user";
+
+const db: Array<User> = [
     {
         id: 1,
         username: "mario",
