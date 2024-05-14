@@ -9,3 +9,5 @@ Refresh Token Expiration - 10 minutes
 <img src="/screenshots/request-flow.png"/>
 
 <h2>Access and Refresh Tokens Authentication flow</h2>
+
+<img src="/screenshots/refresh-access-tokens-flow.drawio.png"/>
