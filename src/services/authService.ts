@@ -4,17 +4,27 @@ import {ACCESS_SECRET, REFRESH_SECRET} from "./../config/secret";
 
 import { User } from "./../types/user";
 
-import db from "./../data/database";
+import { db, createSession } from "./../data/database";
 
 interface LoginData {
     username: String,
     password: String
 }
 
-const generateToken = async (user: User, secret: Secret, expiresIn: string) => {
+const generateAccessToken = async (user: User, sessionId: string, secret: Secret, expiresIn: string) => {
     const payload = {
         id: user.id,
-        role: user.role
+        role: user.role,
+        sessionId
+    };
+
+    const token = await jwt.sign(payload, secret, { expiresIn });
+    return token;
+}
+
+const generateRefreshToken = async (sessionId: string, secret: Secret, expiresIn: string) => {
+    const payload = {
+        sessionId
     };
 
     const token = await jwt.sign(payload, secret, { expiresIn });
@@ -34,7 +44,9 @@ export const loginUser = async (data: LoginData) => {
         throw new Error("Username or password are incorrect!");
     }
 
-    const accessToken = await generateToken(user, ACCESS_SECRET, "2m");
-    const refreshToken = await generateToken(user, REFRESH_SECRET, "10m");
-    return [accessToken, refreshToken];
+    const session = createSession(user.id, user.role);
+
+    const accessToken = await generateAccessToken(user, session.sessionId, ACCESS_SECRET, "5s");
+    const refreshToken = await generateRefreshToken(session.sessionId, REFRESH_SECRET, "10s");
+    return [accessToken, refreshToken, session];
 }

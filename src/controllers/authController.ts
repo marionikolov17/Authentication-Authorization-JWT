@@ -6,18 +6,22 @@ import * as authService from "./../services/authService";
 
 router.post("/login", async (req: express.Request, res: express.Response) => {
     try {
-        const [accessToken, refreshToken] = await authService.loginUser(req.body);
+        const [accessToken, refreshToken, session] = await authService.loginUser(req.body);
 
-        res.cookie("auth", refreshToken, {
+        res.cookie("accessToken", accessToken, {
+            maxAge: 5 * 60 * 100,
+            httpOnly: true
+        });
+        res.cookie("refreshToken", refreshToken, {
             httpOnly: true,
             sameSite: "none",
             secure: true,
-            maxAge: 24 * 60 * 60 * 100
+            maxAge: 10 * 60 * 100
         });
         res.status(200).json({
             status: "success",
             data: {
-                accessToken
+                session
             }
         });
     } catch (err) {

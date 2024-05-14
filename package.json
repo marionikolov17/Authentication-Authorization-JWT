@@ -7,7 +7,7 @@
     
     "build": "tsc",
     "prestart": "npm run build",
-    "start": "nodemon ."
+    "start": "node ."
   },
   "keywords": [],
   "author": "",
