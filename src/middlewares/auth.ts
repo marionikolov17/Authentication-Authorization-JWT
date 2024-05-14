@@ -46,11 +46,11 @@ export const authMiddleware = async (
         const newAccessToken = await jwt.sign(
           { id: session.id, role: session.role, sessionId: session.sessionId },
           ACCESS_SECRET,
-          { expiresIn: "5s" }
+          { expiresIn: "2m" }
         );
 
         res.cookie("accessToken", newAccessToken, {
-          maxAge: 5 * 60 * 100,
+          maxAge: 2 * 60 * 100,
           httpOnly: true,
         });
 

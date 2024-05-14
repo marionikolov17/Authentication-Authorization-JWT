@@ -9,7 +9,7 @@ router.post("/login", async (req: express.Request, res: express.Response) => {
         const [accessToken, refreshToken, session] = await authService.loginUser(req.body);
 
         res.cookie("accessToken", accessToken, {
-            maxAge: 5 * 60 * 100,
+            maxAge: 2 * 60 * 100,
             httpOnly: true
         });
         res.cookie("refreshToken", refreshToken, {

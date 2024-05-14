@@ -46,7 +46,7 @@ export const loginUser = async (data: LoginData) => {
 
     const session = createSession(user.id, user.role);
 
-    const accessToken = await generateAccessToken(user, session.sessionId, ACCESS_SECRET, "5s");
-    const refreshToken = await generateRefreshToken(session.sessionId, REFRESH_SECRET, "10s");
+    const accessToken = await generateAccessToken(user, session.sessionId, ACCESS_SECRET, "2m");
+    const refreshToken = await generateRefreshToken(session.sessionId, REFRESH_SECRET, "10m");
     return [accessToken, refreshToken, session];
 }
