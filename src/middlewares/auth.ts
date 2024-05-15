@@ -2,6 +2,11 @@ import { NextFunction, Response } from "express";
 import * as jwt from "./../lib/jwt";
 import { ACCESS_SECRET, REFRESH_SECRET } from "./../config/secret";
 import { getSession } from "./../data/database";
+import { Secret } from "jsonwebtoken";
+
+const verifyToken = async (token: string, secret: Secret) => {
+  return await jwt.verify(token, secret);
+}
 
 export const authMiddleware = async (
   req: any,
