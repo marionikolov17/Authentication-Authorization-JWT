@@ -39,6 +39,41 @@ const checkAccessToken = async (req: any, res: Response, next: NextFunction) => 
   }
 }
 
+const checkRefreshToken = async (req: any, res: Response, next: NextFunction) => {
+  if (!req.expiredAccessToken) return next();
+
+  const { refreshToken } = req.cookies;
+
+  if (!refreshToken) {
+    return next();
+  }
+
+  try {
+    const refreshPayload = await verifyToken(refreshToken, REFRESH_SECRET);
+
+    // @ts-ignore
+    const session = getSession(refreshPayload.sessionId);
+    if (!session) {
+      return next();
+    }
+
+    const newAccessToken = await generateToken(session);
+
+    res.cookie("accessToken", newAccessToken, {
+      maxAge: 2 * 60 * 100,
+      httpOnly: true,
+    });
+
+    // @ts-ignore
+    req.user = await verifyToken(newAccessToken, ACCESS_SECRET);
+
+    next();
+  } catch (err) {
+    console.error(err.message, "- REFRESH TOKEN");
+    next();
+  }
+}
+
 export const authMiddleware = async (
   req: any,
   res: Response,
