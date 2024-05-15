@@ -3,10 +3,19 @@ import * as jwt from "./../lib/jwt";
 import { ACCESS_SECRET, REFRESH_SECRET } from "./../config/secret";
 import { getSession } from "./../data/database";
 import { Secret } from "jsonwebtoken";
+import { Session } from "./../types/session";
 
 const verifyToken = async (token: string, secret: Secret) => {
   return await jwt.verify(token, secret);
-}
+};
+
+const generateToken = async (session: Session) => {
+  return await jwt.sign(
+    { id: session.id, role: session.role, sessionId: session.sessionId },
+    ACCESS_SECRET,
+    { expiresIn: "2m" }
+  );
+};
 
 export const authMiddleware = async (
   req: any,
@@ -21,7 +30,7 @@ export const authMiddleware = async (
 
   try {
     // Valid access token
-    console.log("Valid Access Token - yes")
+    console.log("Valid Access Token - yes");
     const decoded = await jwt.verify(accessToken, ACCESS_SECRET);
 
     req.user = decoded;
@@ -30,14 +39,14 @@ export const authMiddleware = async (
   } catch (err) {
     // Valid but expired token
     if (err.name == "TokenExpiredError") {
-      console.log("Valid but expired token - yes")
+      console.log("Valid but expired token - yes");
       if (!refreshToken) {
         return next();
       }
 
       try {
         // Valid refresh token and not expired
-        console.log("Valid refresh token and not expired")
+        console.log("Valid refresh token and not expired");
         const refreshPayload = await jwt.verify(refreshToken, REFRESH_SECRET);
 
         // @ts-ignore
