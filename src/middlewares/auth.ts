@@ -79,65 +79,8 @@ export const authMiddleware = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { accessToken, refreshToken } = req.cookies;
-
-  if (!accessToken) {
-    return next();
-  }
-
-  try {
-    // Valid access token
-    console.log("Valid Access Token - yes");
-    const decoded = await jwt.verify(accessToken, ACCESS_SECRET);
-
-    req.user = decoded;
-
-    return next();
-  } catch (err) {
-    // Valid but expired token
-    if (err.name == "TokenExpiredError") {
-      console.log("Valid but expired token - yes");
-      if (!refreshToken) {
-        return next();
-      }
-
-      try {
-        // Valid refresh token and not expired
-        console.log("Valid refresh token and not expired");
-        const refreshPayload = await jwt.verify(refreshToken, REFRESH_SECRET);
-
-        // @ts-ignore
-        const session = getSession(refreshPayload.sessionId);
-
-        if (!session) {
-          return next();
-        }
-
-        // @ts-ignore
-        const newAccessToken = await jwt.sign(
-          { id: session.id, role: session.role, sessionId: session.sessionId },
-          ACCESS_SECRET,
-          { expiresIn: "2m" }
-        );
-
-        res.cookie("accessToken", newAccessToken, {
-          maxAge: 2 * 60 * 100,
-          httpOnly: true,
-        });
-
-        // @ts-ignore
-        const newDecoded = await jwt.verify(newAccessToken, ACCESS_SECRET);
-
-        req.user = newDecoded;
-
-        return next();
-      } catch (err) {
-        console.log(err.message, " REFRESH");
-        return next();
-      }
-    }
-    return next();
-  }
+  await checkAccessToken(req, res, next);
+  await checkRefreshToken(req, res, next);
 };
 
 export const isAuth = (req: any, res: Response, next: NextFunction) => {
