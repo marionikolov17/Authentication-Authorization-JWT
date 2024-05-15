@@ -3,6 +3,7 @@ import express from "express";
 const router = express.Router();
 
 import * as authService from "./../services/authService";
+import { invalidateSession } from "./../data/database";
 
 router.post("/login", async (req: express.Request, res: express.Response) => {
     try {
@@ -35,7 +36,11 @@ router.post("/login", async (req: express.Request, res: express.Response) => {
 });
 
 router.get("/logout", (req: express.Request, res: express.Response) => {
-    res.clearCookie("auth");
+    res.clearCookie("accessToken");
+    res.clearCookie("refreshToken");
+    
+    // @ts-ignore
+    invalidateSession(req.user.sessionId);
     res.status(200).json({
         status: "success",
         data: {
