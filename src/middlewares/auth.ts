@@ -17,6 +17,28 @@ const generateToken = async (session: Session) => {
   );
 };
 
+const checkAccessToken = async (req: any, res: Response, next: NextFunction) => {
+  const { accessToken } = req.cookies;
+
+  if (!accessToken) {
+    return next();
+  }
+
+  try {
+    req.user = await verifyToken(accessToken, ACCESS_SECRET);
+
+    return next();
+  } catch (err) {
+    if (err.name === "TokenExpiredError") {
+      req.expiredAccessToken = true;
+    } else {
+      console.log(err);
+    }
+
+    next();
+  }
+}
+
 export const authMiddleware = async (
   req: any,
   res: Response,
