@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 
 export const sign = (payload: string | object | Buffer, secret: jwt.Secret, options: jwt.SignOptions | undefined) => {
     return new Promise((resolve, reject) => {
-        jwt.sign(payload, secret, options, (err, payload) => {
+        jwt.sign(payload, secret, options, (err: any, payload) => {
             if (err) {
                 reject (err);
             } else {

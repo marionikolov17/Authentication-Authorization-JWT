@@ -25,7 +25,7 @@ router.post("/login", async (req: express.Request, res: express.Response) => {
                 session
             }
         });
-    } catch (err) {
+    } catch (err: any) {
         res.status(400).json({
             status: "fail",
             data: {
