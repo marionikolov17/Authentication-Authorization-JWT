@@ -1,6 +1,4 @@
 import express from "express";
-import { createConnection } from "mysql2/promise";
-import dbConfig from "./config/db-config";
 
 // Config imports
 import expressConfig from "./config/expressConfig";
