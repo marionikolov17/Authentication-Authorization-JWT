@@ -7,7 +7,7 @@
     "build": "tsc",
     "prestart": "npm run build",
     "start": "node .",
-    "": ""
+    "migration:create": "npx sequelize-cli model:generate"
   },
   "keywords": [],
   "author": "",
