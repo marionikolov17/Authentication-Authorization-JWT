@@ -22,7 +22,7 @@
       "typeRoots": ["./src/typings", "../../node_modules/@types"],
       "outDir": "dist"
     },
-    "include": ["./**/*.ts"],
+    "include": ["./**/*.ts", "src/database/sequelize.config.js"],
     "exclude": ["node_modules", "build", "dist"]
 }
   
